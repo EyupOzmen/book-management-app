@@ -3,16 +3,22 @@ import BookForm from './BookForm';
 import BooksContext from '../context/BooksContext';
 
 const AddBook = ({ history }) => {
-   const { books, setBooks } = useContext(BooksContext);
+   const { books, setBooks, insertBook, refetch } = useContext(BooksContext);
 
    const handleOnSubmit = (book) => {
+      console.log(book);
+      insertBook(book);
       setBooks([book, ...books]);
+
       history.push('/');
    };
 
    return (
       <>
-         <BookForm handleOnSubmit={handleOnSubmit} />
+         <BookForm
+            refetch={() => refetch({})}
+            handleOnSubmit={handleOnSubmit}
+         />
       </>
    );
 };

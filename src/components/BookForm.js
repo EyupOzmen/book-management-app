@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { v4 as uuidv4 } from 'uuid';
 
 const BookForm = (props) => {
+   console.log('form', props.book);
    const [book, setBook] = useState(() => {
       return {
+         id: props.book ? props.book.id : '',
          bookname: props.book ? props.book.bookname : '',
          author: props.book ? props.book.author : '',
          quantity: props.book ? props.book.quantity : '',
          price: props.book ? props.book.price : '',
-         date: props.book ? props.book.date : '',
+         createDate: props.book ? props.book.createDate : '',
+         updateDate: props.book ? props.book.updateDate : '',
       };
    });
 
    const [errorMsg, setErrorMsg] = useState('');
-   const { bookname, author, price, quantity } = book;
+   let { bookname, author, price, quantity } = book;
 
    const handleOnSubmit = (event) => {
       event.preventDefault();
-      const values = [bookname, author, price, quantity];
+      let values = [bookname, author, price, quantity];
       let errorMsg = '';
 
       const allFieldsFilled = values.every((field) => {
@@ -27,13 +29,13 @@ const BookForm = (props) => {
       });
 
       if (allFieldsFilled) {
-         const book = {
-            id: uuidv4(),
+         quantity = parseInt(quantity);
+         price = parseFloat(price);
+         let book = {
             bookname,
             author,
-            price,
             quantity,
-            date: new Date(),
+            price,
          };
          props.handleOnSubmit(book);
       } else {
@@ -117,7 +119,12 @@ const BookForm = (props) => {
                   onChange={handleInputChange}
                />
             </Form.Group>
-            <Button variant="primary" type="submit" className="submit-btn">
+            <Button
+               onClick={props.refetch}
+               variant="primary"
+               type="submit"
+               className="submit-btn"
+            >
                Submit
             </Button>
          </Form>

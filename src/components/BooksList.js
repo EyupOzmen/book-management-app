@@ -4,15 +4,19 @@ import Book from './Book';
 import BooksContext from '../context/BooksContext';
 
 const BooksList = () => {
-   const { books, setBooks } = useContext(BooksContext);
+   const { books, setBooks, deleteBook, loading } = useContext(BooksContext);
+
    const handleRemoveBook = (id) => {
       setBooks(books.filter((book) => book.id !== id));
+      deleteBook(id);
    };
 
    return (
       <>
          <div className="book-list">
-            {!_.isEmpty(books) ? (
+            {loading ? (
+               <div>Loading...</div>
+            ) : !_.isEmpty(books) ? (
                books.map((book) => (
                   <Book
                      key={book.id}

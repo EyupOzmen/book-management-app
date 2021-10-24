@@ -8,7 +8,8 @@ const Book = ({
    author,
    price,
    quantity,
-   date,
+   createDate,
+   updateDate,
    handleRemoveBook,
 }) => {
    const history = useHistory();
@@ -21,7 +22,12 @@ const Book = ({
                <div>Author: {author}</div>
                <div>Quantity: {quantity} </div>
                <div>Price: {price} </div>
-               <div>Date: {new Date(date).toDateString()}</div>
+               <div>
+                  CreateDate: {new Date(createDate).toLocaleString('tr-TR')}
+               </div>
+               <div>
+                  UpdateDate: {new Date(updateDate).toLocaleString('tr-TR')}
+               </div>
             </div>
             <Button
                variant="primary"
